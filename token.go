@@ -50,7 +50,7 @@ func (token *Token) Validate(str string) (jwt.MapClaims, error) {
 		}
 
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
-		return token.Config.Secret, nil
+		return []byte(token.Config.Secret), nil
 	})
 
 	if err != nil {
