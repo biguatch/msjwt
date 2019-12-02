@@ -12,6 +12,7 @@ import (
 type TokenInterface interface {
 	Generate(id string, isAdmin bool) (string, error)
 	Validate(str string) (jwt.MapClaims, error)
+	GetConfig() *Config
 }
 
 type Token struct {
@@ -66,4 +67,8 @@ func (token *Token) Validate(str string) (jwt.MapClaims, error) {
 		return claims, nil
 	}
 	return nil, errors.New("could not validate")
+}
+
+func (token *Token) GetConfig() *Config {
+	return token.Config
 }
