@@ -32,10 +32,10 @@ func (token *Token) Generate(id string, isAdmin bool) (string, error) {
 	}{
 		jwt.StandardClaims{
 			Id:        uuid.New().String(),
-			Audience:  token.Config.Audience,
+			Audience:  token.Config.GetAudience(),
 			Subject:   id,
 			ExpiresAt: time.Now().Add(5 * time.Hour).Unix(),
-			Issuer:    token.Config.Issuer,
+			Issuer:    token.Config.GetIssuer(),
 			IssuedAt:  time.Now().Unix(),
 		},
 		isAdmin,
@@ -43,7 +43,7 @@ func (token *Token) Generate(id string, isAdmin bool) (string, error) {
 
 	tk := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	tokenString, err := tk.SignedString([]byte(token.Config.Secret))
+	tokenString, err := tk.SignedString([]byte(token.Config.GetSecret()))
 
 	return tokenString, err
 }
